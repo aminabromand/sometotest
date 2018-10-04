@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="processEngineConfiguration" class="org.activiti.engine.impl.cfg.StandaloneInMemProcessEngineConfiguration">
+
+        <!--<property name="jdbcUrl" value="jdbc:h2:mem:activiti;DB_CLOSE_DELAY=1000" />-->
+        <!--<property name="jdbcDriver" value="org.h2.Driver" />-->
+        <!--<property name="jdbcUsername" value="sa" />-->
+        <!--<property name="jdbcPassword" value="" />-->
+
+
+        <!--<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/activiti" />-->
+        <!--<property name="jdbcUrl" value="jdbc:sqlite::memory:activiti" />-->
+        <!--<property name="jdbcUrl" value="jdbc:sqlite:/Users/amin/Work/sqlitedb/test.db" />-->
+        <!--<property name="jdbcDriver" value="com.mysql.jdbc.Driver" />-->
+        <!--<property name="jdbcDriver" value="org.sqlite.JDBC" />-->
+        <property name="jdbcUrl" value="jdbc:h2:/Users/amin/Work/sqlitedb/test.db:activiti;DB_CLOSE_DELAY=1000" />
+        <property name="jdbcDriver" value="org.h2.Driver" />
+        <property name="jdbcUsername" value="sa" />
+        <property name="jdbcPassword" value="" />
+        <!--<property name="url" value="jdbc:mysql://localhost:3306/activiti" />-->
+        <!--<property name="driverClassName" value="com.mysql.jdbc.Driver" />-->
+        <!--<property name="username" value="activiti" />-->
+        <!--<property name="password" value="activiti" />-->
+        <!--<property name="defaultAutoCommit" value="false" />-->
+    </bean>
+
+</beans>
