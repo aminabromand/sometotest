@@ -1,6 +1,7 @@
 package com.sometotest.test;
 
 import com.sometotest.test.jetty.CustomJettyServer;
+import com.sometotest.test.jetty.CustomJsonJettyServer;
 
 /**
  * Hello world!
@@ -14,6 +15,7 @@ public class App
 
 		try {
 			CustomJettyServer.startServer();
+			CustomJsonJettyServer.startServer();
 		} catch ( Exception ex ) {
 			ex.printStackTrace();
 		}

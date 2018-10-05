@@ -20,6 +20,22 @@ public class HttpClientUtilsTest{
 		}
 	}
 
+	public void doPostJson() {
+		try{
+			String url = "http://localhost:8081";
+			Map<String, String> cookies = new HashMap<String, String>();
+			Map<String, String> headers = new HashMap<String, String>();
+			Map<String, String> params = new HashMap<String, String>();
+
+			String result = HttpClientUtils.postJson( url, cookies, headers, params );
+			System.out.println( "It worked!" );
+			System.out.println( "result: " );
+			System.out.println( result );
+		} catch ( IOException ex ) {
+			System.out.println( "It wouldn't work!" );
+		}
+	}
+
 
 	public void doPost() {
 
@@ -44,13 +60,14 @@ public class HttpClientUtilsTest{
 		params.put( "xsrftoken", getProperty( "params.xsrftoken" ) );
 
 		Map<String, File> files = new HashMap<String, File>();
-		System.out.println(getProperty( "files.location1" ));
-		System.out.println(getProperty( "files.name1" ));
+		System.out.println("files.location1: " + getProperty( "files.location1" ));
+		System.out.println("files.name1: " + getProperty( "files.name1" ));
 		files.put( "upload_file", getFile( getProperty( "files.location1" ), getProperty( "files.name1" ) ) );
 
 		try{
 			String result = HttpClientUtils.post( url, cookies, headers, params, files );
 			System.out.println( "It worked!" );
+			System.out.println( "result: " );
 			System.out.println( result );
 		} catch ( IOException ex ) {
 			System.out.println( "It wouldn't work!" );

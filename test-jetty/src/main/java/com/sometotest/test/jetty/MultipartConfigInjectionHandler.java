@@ -42,8 +42,7 @@ public class MultipartConfigInjectionHandler extends HandlerWrapper {
 					System.getProperty("java.io.tmpdir"));
 
 	public static boolean isMultipartRequest(ServletRequest request) {
-		return request.getContentType() != null
-						&& request.getContentType().startsWith(MULTIPART_FORMDATA_TYPE);
+		return request.getContentType() != null && request.getContentType().startsWith(MULTIPART_FORMDATA_TYPE);
 	}
 
 	/**
@@ -75,10 +74,11 @@ public class MultipartConfigInjectionHandler extends HandlerWrapper {
 	}
 
 	@Override
-	public void handle(String target, Request baseRequest, HttpServletRequest request,
-					HttpServletResponse response) throws IOException, ServletException {
-		boolean multipartRequest = HttpMethod.POST.is(request.getMethod())
-						&& isMultipartRequest(request);
+	public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
+					throws IOException, ServletException {
+
+		boolean multipartRequest = HttpMethod.POST.is(request.getMethod()) && isMultipartRequest(request);
+		System.out.println("multipartRequest: " + multipartRequest);
 		if (multipartRequest) {
 			enableMultipartSupport(request);
 		}

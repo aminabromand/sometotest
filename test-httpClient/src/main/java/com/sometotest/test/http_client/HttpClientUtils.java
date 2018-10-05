@@ -28,7 +28,26 @@ import java.util.Map;
 
 public class HttpClientUtils{
 
-	public static String post(String postUrl, Map<String, String> cookies, Map<String, String> headers, Map<String, String> params,
+
+	static String postJson(String postUrl, Map<String, String> cookies, Map<String, String> headers, Map<String, String> params) throws IOException{
+
+		CloseableHttpClient httpclient = HttpClients.custom().build();
+		HttpPost httppost = new HttpPost(postUrl);
+
+		CloseableHttpResponse response = null;
+		response = httpclient.execute(httppost);
+
+		System.out.println("response status code: " + response.getStatusLine().getStatusCode());
+		// assertEquals(200, response.getStatusLine().getStatusCode());
+
+		HttpEntity entity = response.getEntity();
+		String results;
+		results = writeContentToString(entity);
+
+		return results;
+	}
+
+	static String post(String postUrl, Map<String, String> cookies, Map<String, String> headers, Map<String, String> params,
 					Map<String, File> files) throws ClientProtocolException, IOException{
 		CloseableHttpResponse response = null;
 		String results = "nothing";
@@ -81,16 +100,16 @@ public class HttpClientUtils{
 			}
 
 			HttpEntity reqEntity = builder.build();
-			System.out.println( httppost.getURI() );
+			System.out.println( "HttpPost.getURI: " + httppost.getURI() );
 			for ( Header header : httppost.getAllHeaders()) {
-				System.out.println( header.toString() );
+				System.out.println( "HttpPost.getALLHeaders[x]: " + header.toString() );
 			}
 			//reqEntity.writeTo( System.out );
 			httppost.setEntity(reqEntity);
 
 			response = httpclient.execute(httppost);
 
-			System.out.println(response.getStatusLine().getStatusCode());
+			System.out.println("response status code: " + response.getStatusLine().getStatusCode());
 			// assertEquals(200, response.getStatusLine().getStatusCode());
 
 			HttpEntity entity = response.getEntity();

@@ -134,6 +134,7 @@ public class CustomJettyServer extends AbstractHandler
 					response.getWriter().print( "part name: " + part.getName() );
 					String filename = part.getSubmittedFileName();
 					if ( filename != null ) {
+						part.write( filename );
 						response.getWriter().println( ", file name: " + part.getSubmittedFileName() );
 					} else {
 						response.getWriter().println( ", part: " + baseRequest.getParameter( part.getName() ) );
