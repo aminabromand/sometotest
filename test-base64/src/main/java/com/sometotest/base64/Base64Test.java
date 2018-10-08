@@ -17,9 +17,9 @@ public class Base64Test{
 	private static final byte[] keyValue = new byte[]{ 'X', 'p', 'T', 'U', 'v', 'i', 's', 'B', 'q', 'l', '1', '9', 'U', 'k', 'i', '0' };
 
 	public void run( String[] args ) throws IOException{
-		String inputFilePath = args[0] + File.separator + "input";
+		String inputFilePath = args[0] + File.separator + "test_small.png";
 		String encodedFilePath = args[0] + File.separator + "encoded";
-		String outputFilePath = args[0] + File.separator + "output";
+		String outputFilePath = args[0] + File.separator + "output.png";
 
 		File inputFile = new File( inputFilePath );
 		File encodedFile = new File( encodedFilePath );
@@ -28,7 +28,7 @@ public class Base64Test{
 		encodedFile.createNewFile();
 		outputFile.createNewFile();
 
-		System.out.println( inputFile.exists());
+		System.out.println(inputFile.exists());
 		System.out.println(encodedFile.getPath());
 
 
@@ -40,23 +40,47 @@ public class Base64Test{
 	private void copy(File inFile, File outFile, String action) {
 		int length = 0;
 		try( InputStream is = new FileInputStream( inFile ); OutputStream os = new FileOutputStream( outFile ) ){
-			byte[] inBuffer = new byte[1024];
+
+			int input_length = 0;
+			if( action == null ) input_length = 0;
+			if (action.equals( "encode" )) {
+				input_length = 1023;
+
+			} else if(action.equals( "decode" )) {
+				input_length = 1364;
+			}
+
+			byte[] inBuffer = new byte[input_length];
 			byte[] tempBuffer;
 			byte[] outBuffer = new byte[0];
 
 			while((length = is.read( inBuffer )) > 0){
-				tempBuffer = Arrays.copyOfRange(inBuffer, 0, length);
+				tempBuffer = Arrays.copyOfRange( inBuffer, 0, length );
 
 				if( action == null )
 					outBuffer = tempBuffer;
 				else if( action.equals( "encode" ) ){
+
 					outBuffer = Base64.getEncoder().encode( tempBuffer );
-				}
-				else if( action.equals( "decode" ) )
+
+//					byte[] chunk;
+//					byte[] chunk2;
+//
+//					for (int i=1; i<=8; i++) {
+//						chunk = Arrays.copyOfRange( tempBuffer, 0, i );
+//						System.out.println(i + " bytes: "+ new String(chunk, "UTF-8"));
+//						chunk2 = Base64.getEncoder().encode( chunk );
+//						System.out.println(i + " base64: "+ new String(chunk2, "UTF-8"));
+//					}
+
+
+				} else if( action.equals( "decode" ) ) {
 					outBuffer = Base64.getDecoder().decode( tempBuffer );
+				}
 
 				os.write( outBuffer, 0, outBuffer.length );
 			}
+
 		} catch(Exception e){
 			e.printStackTrace();
 		}

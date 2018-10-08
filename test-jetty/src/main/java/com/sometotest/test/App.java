@@ -14,7 +14,7 @@ public class App
         System.out.println( "Hello World!" );
 
 		try {
-			CustomJettyServer.startServer();
+			//CustomJettyServer.startServer();
 			CustomJsonJettyServer.startServer();
 		} catch ( Exception ex ) {
 			ex.printStackTrace();

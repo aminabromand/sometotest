@@ -1,5 +1,6 @@
 package com.sometotest.test.http_client;
 
+import com.sometotest.test.json.JsonTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
@@ -10,6 +11,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
 import org.apache.http.Header;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
@@ -34,6 +36,19 @@ public class HttpClientUtils{
 		CloseableHttpClient httpclient = HttpClients.custom().build();
 		HttpPost httppost = new HttpPost(postUrl);
 
+		JsonTest jsonTest = new JsonTest();
+
+		String jsonString = jsonTest.getJsonString();
+		System.out.println("jsonString: " + jsonString);
+
+		StringEntity postingString = new StringEntity(jsonString);//gson.tojson() converts your pojo to json
+		httppost.setEntity(postingString);
+		httppost.setHeader("Content-type", "application/json");
+
+
+
+		String results = "";
+
 		CloseableHttpResponse response = null;
 		response = httpclient.execute(httppost);
 
@@ -41,7 +56,6 @@ public class HttpClientUtils{
 		// assertEquals(200, response.getStatusLine().getStatusCode());
 
 		HttpEntity entity = response.getEntity();
-		String results;
 		results = writeContentToString(entity);
 
 		return results;
@@ -99,11 +113,12 @@ public class HttpClientUtils{
 				}
 			}
 
-			HttpEntity reqEntity = builder.build();
 			System.out.println( "HttpPost.getURI: " + httppost.getURI() );
 			for ( Header header : httppost.getAllHeaders()) {
 				System.out.println( "HttpPost.getALLHeaders[x]: " + header.toString() );
 			}
+
+			HttpEntity reqEntity = builder.build();
 			//reqEntity.writeTo( System.out );
 			httppost.setEntity(reqEntity);
 

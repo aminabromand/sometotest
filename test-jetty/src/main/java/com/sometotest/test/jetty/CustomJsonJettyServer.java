@@ -1,5 +1,8 @@
 package com.sometotest.test.jetty;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
@@ -11,11 +14,11 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Collection;
-import java.util.Enumeration;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 
 public class CustomJsonJettyServer extends AbstractHandler
 {
@@ -35,10 +38,10 @@ public class CustomJsonJettyServer extends AbstractHandler
 		// Write back response
 		response.getWriter().println("Method: "+baseRequest.getMethod());
 		response.getWriter().println("ContentType: "+baseRequest.getContentType());
-		response.getWriter().println("ContextPath"+baseRequest.getContextPath());
-		response.getWriter().println("RequestURI"+baseRequest.getRequestURI());
-		response.getWriter().println("OriginalURI"+baseRequest.getOriginalURI());
-		response.getWriter().println("HttpURI"+baseRequest.getHttpURI());
+		response.getWriter().println("ContextPath: "+baseRequest.getContextPath());
+		response.getWriter().println("RequestURI: "+baseRequest.getRequestURI());
+		response.getWriter().println("OriginalURI: "+baseRequest.getOriginalURI());
+		response.getWriter().println("HttpURI: "+baseRequest.getHttpURI());
 
 
 
@@ -112,6 +115,38 @@ public class CustomJsonJettyServer extends AbstractHandler
 				}
 
 			}
+		}
+
+		String data = "";
+		StringBuilder builder = new StringBuilder();
+		BufferedReader reader = request.getReader();
+
+		String line;
+		int i = 0;
+		while ((line = reader.readLine()) != null) {
+			i++;
+			System.out.println("line no: " + i);
+			builder.append(line);
+		}
+		data = builder.toString();
+
+		JsonObject jsonObject = (new JsonParser()).parse(data).getAsJsonObject();
+		String file1String = jsonObject.getAsJsonArray( "files" ).get( 0 ).getAsJsonObject().get("file1").getAsString();
+
+
+
+		byte[] decodedValue = Base64.getMimeDecoder().decode(file1String.getBytes( "UTF-8" ));
+//		byte[] decodedValue = Base64.getDecoder().decode( file1String.getBytes( "UTF-8" ) );
+		System.out.println("decoded value length: " + decodedValue.length);
+
+		String outputFilePath = CustomJsonJettyServer.class.getProtectionDomain().getCodeSource().getLocation().getPath()
+						+ File.separator + ".." + File.separator + "resources" + File.separator ;
+		File outputFile = new File( outputFilePath + "output.png" );
+		outputFile.createNewFile();
+
+
+		try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+			fos.write(decodedValue);
 		}
 
 
