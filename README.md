@@ -10,7 +10,7 @@ A collection of test module to test different small java frameworks
 |[test-base64](#test-base64)                    |
 |[test-eagent-client](#test-eagent-client)      |
 |[test-eagent-server](#test-eagent-server)      |
-|[test-httpClient](#test-httpClient)            |
+|[test-httpClient](#test-httpclient)            |
 |[test-jetty](#test-jetty)                      |
 |[test-json](#test-json)                        |
 |[test-module](#test-module)                    |
