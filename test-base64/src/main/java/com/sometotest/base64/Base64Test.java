@@ -17,7 +17,7 @@ public class Base64Test{
 	private static final byte[] keyValue = new byte[]{ 'X', 'p', 'T', 'U', 'v', 'i', 's', 'B', 'q', 'l', '1', '9', 'U', 'k', 'i', '0' };
 
 	public void run( String[] args ) throws IOException{
-		String inputFilePath = args[0] + File.separator + "test_small.png";
+		String inputFilePath = args[0] + File.separator + "test.png";
 		String encodedFilePath = args[0] + File.separator + "encoded";
 		String outputFilePath = args[0] + File.separator + "output.png";
 
@@ -63,6 +63,10 @@ public class Base64Test{
 
 					outBuffer = Base64.getEncoder().encode( tempBuffer );
 
+
+
+//		****	This part demonstrates the relation of 3 bytes to 4 base64 ascii characters ****
+//
 //					byte[] chunk;
 //					byte[] chunk2;
 //

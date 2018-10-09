@@ -1,7 +1,17 @@
 package com.sometotest.selenium;
 
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.*;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+
+import org.openqa.selenium.remote.Command;
+import org.openqa.selenium.remote.CommandExecutor;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.HttpCommandExecutor;
+import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.Response;
+import org.openqa.selenium.remote.SessionId;
 import org.openqa.selenium.remote.http.W3CHttpCommandCodec;
 import org.openqa.selenium.remote.http.W3CHttpResponseCodec;
 
@@ -52,17 +62,31 @@ public class Selenium2Test{
 
 	public static void main(String [] args) {
 
+		System.setProperty("webdriver.gecko.driver","/Users/amin/Documents/geckodriver/geckodriver");
+
+		FirefoxOptions opts = new FirefoxOptions();
+		opts.setCapability( "moz:webdriverClick", false );
+
+		WebDriver driver = new FirefoxDriver( opts );
+
 		//System.setProperty("webdriver.chrome.driver","/Applications/Google Chrome.app/Contents/MacOS/Google Chrome");
 
-		ChromeDriver driver = new ChromeDriver();
+		//ChromeDriver driver = new ChromeDriver();
+
 		System.out.println("test");
-		HttpCommandExecutor executor = (HttpCommandExecutor) driver.getCommandExecutor();
+
+		HttpCommandExecutor executor = (HttpCommandExecutor) ((FirefoxDriver)driver).getCommandExecutor();;
 		URL url = executor.getAddressOfRemoteServer();
-		SessionId session_id = driver.getSessionId();
+		SessionId session_id = ((FirefoxDriver)driver).getSessionId();
 
 
-		//RemoteWebDriver driver2 = createDriverFromSession(session_id, url);
-		//driver2.get("http://localhost:8080");
+		RemoteWebDriver driver2 = createDriverFromSession(session_id, url);
+		driver2.get("http://www.google.de");
+
+
+
+
+
 	}
 
 
