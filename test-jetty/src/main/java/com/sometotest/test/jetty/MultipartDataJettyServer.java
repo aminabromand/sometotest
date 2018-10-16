@@ -19,7 +19,7 @@ import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
 
-public class CustomJettyServer extends AbstractHandler
+public class MultipartDataJettyServer extends AbstractHandler
 {
 	@Override
 	public void handle( String target,
@@ -164,7 +164,7 @@ public class CustomJettyServer extends AbstractHandler
 
 		Server server = new Server(8080);
 
-		CustomJettyServer myJettyServer = new CustomJettyServer();
+		MultipartDataJettyServer myJettyServer = new MultipartDataJettyServer();
 
 
 

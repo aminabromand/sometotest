@@ -2,7 +2,7 @@
 
 >Learning is like rowing upstream: not to advance is to drop back.
 
-A collection of test module to test different small java frameworks
+A collection of test modules to test different small java frameworks
 
 |modules                                        |
 |:----------------------------------------------|
@@ -39,14 +39,20 @@ a combination of activiti, selenium & sikulix with jetty http Server and Client 
 a gui with jetty http Server and Client to work with test module test-eagent-client
 
 ## test-httpClient
-tests apache httpClient
-1. sends .png file as multipartFormData to test module test-jetty
-2. sends .png file as base64 encoded string embedded in a json to test module test-jetty
+tests apache httpClient features
+* sends .png file as multipartFormData
+* sends .png file as base64 encoded string embedded in a json
+* sends a string to a basic auth secured http endpoint
+* sends a string to an ssl secured https endpoint (self signed)
+all features can be tested by sending them to test module test-jetty
 
 ## test-jetty
-tests jetty server
-* recieves and saves multipartFormData from test module test httpClient
-* recieves from test module test httpClient json, extracts base64 encoded string, decodes and saves as .png file
+tests jetty server different handlers:
+* recieves and saves multipartFormData
+* recieves json, extracts base64 encoded string, decodes and saves as .png file
+* recieves a post request on a basic auth secured endpoint
+* recieves a post request on an ssl secured endpoint (self signed)
+all handlers can be tested with requests from test module test-httpClient 
 
 ## test-json
 tests google gson framework
@@ -57,8 +63,9 @@ tests java file writing and reading from resources and from external files
 ## test-selenium
 tests selenium framework
 
-## test-selenium2 *not working at the moment*
-tests selenium to attach to an open Browser window
+## test-selenium2
+tests selenium to attach to an open Browser window  
+*attaching to an open browser not opened by selenium is not working currently*
 
 ## test-sikulix
 tests sikulix framework

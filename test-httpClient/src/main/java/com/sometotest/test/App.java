@@ -20,7 +20,15 @@ public class App
 		System.out.println( "Hello World!" );
 
 		Scanner scanner = new Scanner(System.in);
-		System.out.print( "Choose your http post (1 = 'multipartFormData', 2 = 'application/json'): " );
+
+		System.out.println( "Choose your http post");
+		System.out.println ("* 'multipartFormData' => type 1");
+		System.out.println( "* 'application/json' => type 2" );
+		System.out.println( "* 'with Basic Auth' => type 3" );
+		System.out.println( "* 'with ssl/tls' => type 4" );
+
+		System.out.print( "type your selection number: " );
+
 		testSelection = Integer.valueOf(scanner.nextLine());
 
 		HttpClientUtilsTest myTester = new HttpClientUtilsTest();
@@ -29,6 +37,10 @@ public class App
 			myTester.doPost();
 		} else if (testSelection == 2) {
 			myTester.doPostJson();
+		} else if (testSelection == 3) {
+			myTester.doPostSecure();
+		} else if (testSelection == 4) {
+			myTester.doPostSsl();
 		}
 
 		scanner.close();

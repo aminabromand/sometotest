@@ -1,6 +1,5 @@
 package com.sometotest.test.jetty;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.eclipse.jetty.server.Request;
@@ -10,7 +9,6 @@ import org.eclipse.jetty.server.handler.HandlerCollection;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
@@ -20,7 +18,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
-public class CustomJsonJettyServer extends AbstractHandler
+public class JsonJettyServer extends AbstractHandler
 {
 	@Override
 	public void handle( String target,
@@ -139,7 +137,7 @@ public class CustomJsonJettyServer extends AbstractHandler
 //		byte[] decodedValue = Base64.getDecoder().decode( file1String.getBytes( "UTF-8" ) );
 		System.out.println("decoded value length: " + decodedValue.length);
 
-		String outputFilePath = CustomJsonJettyServer.class.getProtectionDomain().getCodeSource().getLocation().getPath()
+		String outputFilePath = JsonJettyServer.class.getProtectionDomain().getCodeSource().getLocation().getPath()
 						+ File.separator + ".." + File.separator + "resources" + File.separator ;
 		File outputFile = new File( outputFilePath + "output.png" );
 		outputFile.createNewFile();
@@ -164,10 +162,12 @@ public class CustomJsonJettyServer extends AbstractHandler
 	{
 
 		System.out.println( System.getProperty("java.io.tmpdir") );
+		System.out.println( "jetty.home: " + System.getProperty("jetty.home") );
+		System.out.println( "jetty.base: " + System.getProperty("jetty.base") );
 
 		Server server = new Server(8081);
 
-		CustomJsonJettyServer myJettyServer = new CustomJsonJettyServer();
+		JsonJettyServer myJettyServer = new JsonJettyServer();
 
 
 
@@ -183,6 +183,7 @@ public class CustomJsonJettyServer extends AbstractHandler
 
 		server.setHandler(multipartConfigInjectionHandler);
 //		server.setHandler( myJettyServer );
+
 
 		server.start();
 		server.join();

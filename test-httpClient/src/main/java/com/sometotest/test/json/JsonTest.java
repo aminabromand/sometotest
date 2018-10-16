@@ -14,7 +14,7 @@ public class JsonTest{
 
 		String inputFilePath = JsonTest.class.getProtectionDomain().getCodeSource().getLocation().getPath()
 						+ File.separator + ".." + File.separator + "resources" + File.separator ;
-		File inputFile = new File( inputFilePath + "test.png" );
+		File inputFile = new File( inputFilePath + "test_small.png" );
 
 		String fileString = "";
 		int length = 0;

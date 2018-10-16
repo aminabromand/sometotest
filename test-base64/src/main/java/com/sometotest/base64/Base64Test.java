@@ -19,7 +19,7 @@ public class Base64Test{
 	public void run( String[] args ) throws IOException{
 		String inputFilePath = args[0] + File.separator + "test.png";
 		String encodedFilePath = args[0] + File.separator + "encoded";
-		String outputFilePath = args[0] + File.separator + "output.png";
+		String outputFilePath = args[0] + File.separator + "output.docx";
 
 		File inputFile = new File( inputFilePath );
 		File encodedFile = new File( encodedFilePath );

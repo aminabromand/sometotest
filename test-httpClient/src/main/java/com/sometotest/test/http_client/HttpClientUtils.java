@@ -4,11 +4,20 @@ import com.sometotest.test.json.JsonTest;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpHeaders;
+import org.apache.http.HttpHost;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.CookieStore;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.conn.ssl.NoopHostnameVerifier;
+import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
+import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
 import org.apache.http.Header;
 import org.apache.http.entity.StringEntity;
@@ -16,19 +25,131 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
-import org.apache.http.impl.client.BasicCookieStore;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.*;
 import org.apache.http.impl.cookie.BasicClientCookie;
+import org.apache.http.ssl.SSLContextBuilder;
+import org.apache.http.ssl.SSLContexts;
+import org.apache.http.ssl.TrustStrategy;
+import org.apache.http.util.EntityUtils;
 
+import javax.net.ssl.SSLContext;
+import javax.security.cert.CertificateException;
+import javax.security.cert.X509Certificate;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpClientUtils{
+
+	static String postSsl(String postHost, int postPort, String postUrl)
+					throws IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException{
+
+		HttpHost targetHost = new HttpHost(postHost, postPort, "https");
+
+//		SSLContextBuilder builder = new SSLContextBuilder();
+//		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+//		SSLContext sslContext = builder.build();
+
+		SSLContext sslContext = SSLContexts
+						.custom()
+						//FIXME to contain real trust store
+						.loadTrustMaterial(new TrustStrategy() {
+							@Override public boolean isTrusted( java.security.cert.X509Certificate[] x509Certificates, String s )
+											throws java.security.cert.CertificateException{
+								return true;
+							}
+						})
+						.build();
+
+		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
+
+		CloseableHttpClient httpclient = HttpClients.custom()
+						.setSSLSocketFactory(sslsf)
+						.setSSLHostnameVerifier( NoopHostnameVerifier.INSTANCE)
+						.build();
+
+		HttpPost httppost = new HttpPost(postUrl);
+
+
+
+		String jsonString = "post content";
+		System.out.println("jsonString: " + jsonString);
+
+		StringEntity postingString = new StringEntity(jsonString);
+		httppost.setEntity(postingString);
+		httppost.setHeader("Content-type", "application/json");
+
+
+
+		String results = "";
+
+		CloseableHttpResponse response = null;
+		response = httpclient.execute(targetHost, httppost);
+
+		System.out.println("response status code: " + response.getStatusLine().getStatusCode());
+
+		HttpEntity entity = response.getEntity();
+		results = writeContentToString(entity);
+
+		return results;
+	}
+
+	static String postSecure(String postHost, int postPort, String postUrl) throws IOException{
+
+		HttpHost targetHost = new HttpHost(postHost, postPort, "http");
+
+		CredentialsProvider credsProvider = new BasicCredentialsProvider();
+		credsProvider.setCredentials(
+						new AuthScope(targetHost.getHostName(), targetHost.getPort()),
+						new UsernamePasswordCredentials("username", "password"));
+
+		// Create AuthCache instance
+		AuthCache authCache = new BasicAuthCache();
+		// Generate BASIC scheme object and add it to the local auth cache
+		BasicScheme basicAuth = new BasicScheme();
+		authCache.put(targetHost, basicAuth);
+
+		// Add AuthCache to the execution context
+		HttpClientContext context = HttpClientContext.create();
+		context.setCredentialsProvider(credsProvider);
+		context.setAuthCache(authCache);
+
+
+		CloseableHttpClient httpclient = HttpClients.custom().build();
+
+		HttpPost httppost = new HttpPost(postUrl);
+
+
+
+		String jsonString = "post content";
+		System.out.println("jsonString: " + jsonString);
+
+		StringEntity postingString = new StringEntity(jsonString);
+		httppost.setEntity(postingString);
+		httppost.setHeader("Content-type", "application/json");
+
+
+
+		String results = "";
+
+		CloseableHttpResponse response = null;
+		response = httpclient.execute(targetHost, httppost, context);
+//		response = httpclient.execute(targetHost, httppost);
+
+		System.out.println("response status code: " + response.getStatusLine().getStatusCode());
+
+		HttpEntity entity = response.getEntity();
+		results = writeContentToString(entity);
+
+		return results;
+	}
 
 
 	static String postJson(String postUrl, Map<String, String> cookies, Map<String, String> headers, Map<String, String> params) throws IOException{

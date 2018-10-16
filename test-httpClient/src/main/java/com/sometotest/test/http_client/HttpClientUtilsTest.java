@@ -6,6 +6,9 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -18,6 +21,47 @@ public class HttpClientUtilsTest{
 		if ( myProperties == null ) {
 			loadProperties( File.separator + "httpClient.properties" );
 		}
+	}
+
+	public void doPostSsl() {
+		try{
+			String host = "localhost";
+			int port = 8443;
+			String url = "/";
+
+
+			String result = HttpClientUtils.postSsl( host, port, url );
+			System.out.println( "It worked!" );
+			System.out.println( "result: " );
+			System.out.println( result );
+		} catch ( IOException ex ) {
+			System.out.println( "It wouldn't work!" );
+			ex.printStackTrace();
+		} catch(NoSuchAlgorithmException e){
+			e.printStackTrace();
+		} catch(KeyStoreException e){
+			e.printStackTrace();
+		} catch(KeyManagementException e){
+			e.printStackTrace();
+		}
+
+	}
+
+	public void doPostSecure() {
+		try{
+			String host = "localhost";
+			int port = 8081;
+			String url = "/";
+
+
+			String result = HttpClientUtils.postSecure( host, port, url );
+			System.out.println( "It worked!" );
+			System.out.println( "result: " );
+			System.out.println( result );
+		} catch ( IOException ex ) {
+			System.out.println( "It wouldn't work!" );
+		}
+
 	}
 
 	public void doPostJson() {
