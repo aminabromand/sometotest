@@ -93,7 +93,7 @@
                             <resources>
                                 <resource>
                                     <directory>${project.basedir}/src/main/resources/external</directory>
-                                    <filtering>true</filtering>
+                                    <filtering>false</filtering>
                                 </resource>
                             </resources>
                         </configuration>

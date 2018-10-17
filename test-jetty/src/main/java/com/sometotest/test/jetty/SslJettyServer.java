@@ -1,26 +1,15 @@
 package com.sometotest.test.jetty;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import org.eclipse.jetty.http.HttpVersion;
-import org.eclipse.jetty.security.ConstraintMapping;
-import org.eclipse.jetty.security.ConstraintSecurityHandler;
-import org.eclipse.jetty.security.HashLoginService;
-import org.eclipse.jetty.security.authentication.BasicAuthenticator;
 import org.eclipse.jetty.server.*;
 import org.eclipse.jetty.server.handler.AbstractHandler;
 import org.eclipse.jetty.server.handler.HandlerCollection;
-import org.eclipse.jetty.util.security.Constraint;
 import org.eclipse.jetty.util.ssl.SslContextFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Collections;
 
 public class SslJettyServer extends AbstractHandler
 {
@@ -111,7 +100,7 @@ public class SslJettyServer extends AbstractHandler
 
 		// SSL Connector
 		ServerConnector sslConnector = new ServerConnector(server,
-						new SslConnectionFactory(sslContextFactory,HttpVersion.HTTP_1_1.asString()),
+						new SslConnectionFactory(sslContextFactory, HttpVersion.HTTP_1_1.asString()),
 						new HttpConnectionFactory(https_config));
 		sslConnector.setPort(8443);
 		server.addConnector(sslConnector);

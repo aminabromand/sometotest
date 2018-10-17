@@ -1,10 +1,7 @@
 package com.sometotest.test;
 
-import com.sometotest.test.http_client.HttpClientUtils;
 import com.sometotest.test.http_client.HttpClientUtilsTest;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 /**
@@ -25,7 +22,8 @@ public class App
 		System.out.println ("* 'multipartFormData' => type 1");
 		System.out.println( "* 'application/json' => type 2" );
 		System.out.println( "* 'with Basic Auth' => type 3" );
-		System.out.println( "* 'with ssl/tls' => type 4" );
+		System.out.println( "* 'with ssl/tls trust all' => type 4" );
+		System.out.println( "* 'with ssl/tls load Cert' => type 5" );
 
 		System.out.print( "type your selection number: " );
 
@@ -40,7 +38,9 @@ public class App
 		} else if (testSelection == 3) {
 			myTester.doPostSecure();
 		} else if (testSelection == 4) {
-			myTester.doPostSsl();
+			myTester.doPostSslTrustAll();
+		} else if (testSelection == 5) {
+			myTester.doPostSslLoadCert();
 		}
 
 		scanner.close();

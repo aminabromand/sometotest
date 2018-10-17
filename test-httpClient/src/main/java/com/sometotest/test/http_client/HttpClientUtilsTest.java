@@ -1,7 +1,5 @@
 package com.sometotest.test.http_client;
 
-import org.apache.http.HttpHeaders;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,6 +7,8 @@ import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -23,14 +23,42 @@ public class HttpClientUtilsTest{
 		}
 	}
 
-	public void doPostSsl() {
+	public void doPostSslLoadCert() {
 		try{
 			String host = "localhost";
 			int port = 8443;
 			String url = "/";
 
 
-			String result = HttpClientUtils.postSsl( host, port, url );
+			String result = HttpClientUtils.postSslLoadCert( host, port, url );
+			System.out.println( "It worked!" );
+			System.out.println( "result: " );
+			System.out.println( result );
+		} catch ( IOException ex ) {
+			System.out.println( "It wouldn't work!" );
+			ex.printStackTrace();
+		} catch(NoSuchAlgorithmException e){
+			e.printStackTrace();
+		} catch(KeyStoreException e){
+			e.printStackTrace();
+		} catch(KeyManagementException e){
+			e.printStackTrace();
+		} catch(CertificateException e){
+			e.printStackTrace();
+		} catch(UnrecoverableKeyException e){
+			e.printStackTrace();
+		}
+
+	}
+
+	public void doPostSslTrustAll() {
+		try{
+			String host = "localhost";
+			int port = 8443;
+			String url = "/";
+
+
+			String result = HttpClientUtils.postSslTrustAll( host, port, url );
 			System.out.println( "It worked!" );
 			System.out.println( "result: " );
 			System.out.println( result );

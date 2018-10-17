@@ -15,7 +15,6 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.protocol.HttpClientContext;
-import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
 import org.apache.http.conn.ssl.TrustSelfSignedStrategy;
 import org.apache.http.entity.ContentType;
@@ -29,50 +28,109 @@ import org.apache.http.impl.auth.BasicScheme;
 import org.apache.http.impl.client.*;
 import org.apache.http.impl.cookie.BasicClientCookie;
 import org.apache.http.ssl.SSLContextBuilder;
-import org.apache.http.ssl.SSLContexts;
 import org.apache.http.ssl.TrustStrategy;
-import org.apache.http.util.EntityUtils;
 
-import javax.net.ssl.SSLContext;
-import javax.security.cert.CertificateException;
-import javax.security.cert.X509Certificate;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.StringWriter;
-import java.security.KeyManagementException;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
+import javax.net.ssl.*;
+import java.io.*;
+import java.security.*;
+import java.security.cert.CertificateException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class HttpClientUtils{
 
-	static String postSsl(String postHost, int postPort, String postUrl)
+	static String postSslLoadCert(String postHost, int postPort, String postUrl)
+					throws IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException, CertificateException,
+					UnrecoverableKeyException{
+
+		HttpHost targetHost = new HttpHost(postHost, postPort, "https");
+		char[] pwd = "abcdef9h".toCharArray();
+
+
+		String path_base = HttpClientUtils.class.getProtectionDomain().getCodeSource().getLocation().getPath()
+						+ File.separator + ".." + File.separator + "resources" + File.separator ;
+
+		KeyStore keyStore  = KeyStore.getInstance("PKCS12");
+//		KeyStore keyStore  = KeyStore.getInstance("JKS");
+
+		try( FileInputStream instream = new FileInputStream( new File( path_base + "etc/keystore" ) ) ){
+			keyStore.load( instream, pwd );
+		}
+
+
+		TrustManagerFactory tmf = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
+		tmf.init(keyStore);
+		TrustManager[] trustManagers = tmf.getTrustManagers();
+
+		System.out.println(trustManagers.length);
+
+		KeyManagerFactory kmfactory = KeyManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+		kmfactory.init(keyStore, pwd);
+		KeyManager[] keyManagers = kmfactory.getKeyManagers();
+
+		System.out.println(keyManagers.length);
+
+		SSLContext sslContext2 = SSLContext.getInstance("TLS");
+		sslContext2.init( keyManagers, trustManagers, null );
+
+
+		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext2);
+
+		CloseableHttpClient httpclient = HttpClients.custom()
+						.setSSLSocketFactory(sslsf)
+						.build();
+
+		HttpPost httppost = new HttpPost(postUrl);
+
+
+
+		String jsonString = "post content";
+		System.out.println("jsonString: " + jsonString);
+
+		StringEntity postingString = new StringEntity(jsonString);
+		httppost.setEntity(postingString);
+		httppost.setHeader("Content-type", "application/json");
+
+
+
+		String results = "";
+
+		CloseableHttpResponse response = null;
+		response = httpclient.execute(targetHost, httppost);
+
+		System.out.println("response status code: " + response.getStatusLine().getStatusCode());
+
+		HttpEntity entity = response.getEntity();
+		results = writeContentToString(entity);
+
+		return results;
+	}
+
+	static String postSslTrustAll(String postHost, int postPort, String postUrl)
 					throws IOException, KeyStoreException, NoSuchAlgorithmException, KeyManagementException{
 
 		HttpHost targetHost = new HttpHost(postHost, postPort, "https");
 
-//		SSLContextBuilder builder = new SSLContextBuilder();
-//		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
-//		SSLContext sslContext = builder.build();
+		SSLContextBuilder builder = new SSLContextBuilder();
+		builder.loadTrustMaterial(null, new TrustSelfSignedStrategy());
+		SSLContext sslContext = builder.build();
 
-		SSLContext sslContext = SSLContexts
-						.custom()
-						//FIXME to contain real trust store
-						.loadTrustMaterial(new TrustStrategy() {
-							@Override public boolean isTrusted( java.security.cert.X509Certificate[] x509Certificates, String s )
-											throws java.security.cert.CertificateException{
-								return true;
-							}
-						})
-						.build();
+//		SSLContext sslContext = SSLContexts
+//						.custom()
+//						//FIXME to contain real trust store
+//						.loadTrustMaterial(new TrustStrategy() {
+//							@Override public boolean isTrusted( java.security.cert.X509Certificate[] x509Certificates, String s )
+//											throws java.security.cert.CertificateException{
+//								return true;
+//							}
+//						})
+//						.build();
 
 		SSLConnectionSocketFactory sslsf = new SSLConnectionSocketFactory(sslContext);
 
 		CloseableHttpClient httpclient = HttpClients.custom()
 						.setSSLSocketFactory(sslsf)
-						.setSSLHostnameVerifier( NoopHostnameVerifier.INSTANCE)
+//						.setSSLHostnameVerifier( NoopHostnameVerifier.INSTANCE)
 						.build();
 
 		HttpPost httppost = new HttpPost(postUrl);
