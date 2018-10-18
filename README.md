@@ -43,7 +43,9 @@ tests apache httpClient features
 * sends .png file as multipartFormData
 * sends .png file as base64 encoded string embedded in a json
 * sends a string to a basic auth secured http endpoint
-* sends a string to an ssl secured https endpoint (self signed)
+* sends a string to an ssl secured https endpoint accepts self signed
+* sends a string to an ssl secured https endpoint accepts certs in truststore
+
 all features can be tested by sending them to test module test-jetty
 
 ## test-jetty
@@ -52,6 +54,7 @@ tests jetty server different handlers:
 * recieves json, extracts base64 encoded string, decodes and saves as .png file
 * recieves a post request on a basic auth secured endpoint
 * recieves a post request on an ssl secured endpoint (self signed)
+
 all handlers can be tested with requests from test module test-httpClient 
 
 ## test-json
