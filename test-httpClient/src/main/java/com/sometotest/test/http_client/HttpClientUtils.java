@@ -218,7 +218,16 @@ public class HttpClientUtils{
 		JsonTest jsonTest = new JsonTest();
 
 		String jsonString = jsonTest.getJsonString();
-		System.out.println("jsonString: " + jsonString);
+
+		String inputFilePath = JsonTest.class.getProtectionDomain().getCodeSource().getLocation().getPath()
+						+ File.separator + ".." + File.separator + "resources" + File.separator ;
+		File outputFile = new File( inputFilePath + "outfile_pic38.json" );
+
+		try (FileOutputStream fos = new FileOutputStream(outputFile)) {
+			fos.write(jsonString.getBytes( "UTF-8" ));
+		}
+
+		//System.out.println("jsonString: " + jsonString);
 
 		StringEntity postingString = new StringEntity(jsonString);//gson.tojson() converts your pojo to json
 		httppost.setEntity(postingString);

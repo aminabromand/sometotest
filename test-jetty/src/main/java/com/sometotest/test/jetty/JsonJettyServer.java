@@ -139,7 +139,7 @@ public class JsonJettyServer extends AbstractHandler
 
 		String outputFilePath = JsonJettyServer.class.getProtectionDomain().getCodeSource().getLocation().getPath()
 						+ File.separator + ".." + File.separator + "resources" + File.separator ;
-		File outputFile = new File( outputFilePath + "output.png" );
+		File outputFile = new File( outputFilePath + "pic38.png" );
 		outputFile.createNewFile();
 
 
