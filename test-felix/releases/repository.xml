@@ -1,0 +1,127 @@
+<repository lastmodified='20200124115327.171'>
+  <resource id='com.test.felix.bookshelf-inventory-api/1.5.0' symbolicname='com.test.felix.bookshelf-inventory-api' presentationname='Bookshelf Inventory API' uri='file:/Users/amin/Work/sometotest/test-felix/releases/com/test/felix/com.test.felix.bookshelf-inventory-api/1.5.0/com.test.felix.bookshelf-inventory-api-1.5.0.jar' version='1.5.0'>
+    <description>Defines the API for the Bookshelf inventory.</description>
+    <size>7132</size>
+    <category id='sample'/>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.test.felix.bookshelf-inventory-api'/>
+      <p n='presentationname' v='Bookshelf Inventory API'/>
+      <p n='version' t='version' v='1.5.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.inventory.api'/>
+      <p n='version' t='version' v='0.0.0'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.api</require>
+  </resource>
+  <resource id='com.test.felix.bookshelf-inventory-impl-mock/1.5.0' symbolicname='com.test.felix.bookshelf-inventory-impl-mock' presentationname='Bookshelf Inventory Impl - Mock' uri='file:/Users/amin/Work/sometotest/test-felix/releases/com/test/felix/com.test.felix.bookshelf-inventory-impl-mock/1.5.0/com.test.felix.bookshelf-inventory-impl-mock-1.5.0.jar' version='1.5.0'>
+    <description>Memory-based mock implementation of the Bookshelf Inventory API</description>
+    <size>9918</size>
+    <category id='sample'/>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.test.felix.bookshelf-inventory-impl-mock'/>
+      <p n='presentationname' v='Bookshelf Inventory Impl - Mock'/>
+      <p n='version' t='version' v='1.5.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.inventory.impl.mock'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='com.test.felix.bookshelf.inventory.api'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.impl.mock))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.impl.mock</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version=1.5</require>
+  </resource>
+  <resource id='com.test.felix.bookshelf-service/1.7.0' symbolicname='com.test.felix.bookshelf-service' presentationname='Bookshelf Service' uri='file:/Users/amin/Work/sometotest/test-felix/releases/com/test/felix/com.test.felix.bookshelf-service/1.7.0/com.test.felix.bookshelf-service-1.7.0.jar' version='1.7.0'>
+    <description>Defines the API and implementation for the Bookshelf Service.</description>
+    <size>11277</size>
+    <category id='sample'/>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.test.felix.bookshelf-service'/>
+      <p n='presentationname' v='Bookshelf Service'/>
+      <p n='version' t='version' v='1.7.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.service.api'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='com.test.felix.bookshelf.inventory.api'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.service.impl'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.osgi.framework,com.test.felix.bookshelf.inventory.api,com.test.felix.bookshelf.service.api'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.impl))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.impl</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version=1.5</require>
+  </resource>
+  <resource id='com.test.felix.bookshelf-service/1.8.0' symbolicname='com.test.felix.bookshelf-service' presentationname='Bookshelf Service' uri='file:/Users/amin/Work/sometotest/test-felix/releases/com/test/felix/com.test.felix.bookshelf-service/1.8.0/com.test.felix.bookshelf-service-1.8.0.jar' version='1.8.0'>
+    <description>Defines the API and implementation for the Bookshelf Service.</description>
+    <size>11230</size>
+    <category id='sample'/>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.test.felix.bookshelf-service'/>
+      <p n='presentationname' v='Bookshelf Service'/>
+      <p n='version' t='version' v='1.8.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.service.api'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='com.test.felix.bookshelf.inventory.api'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.service.impl'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.osgi.framework,com.test.felix.bookshelf.inventory.api,com.test.felix.bookshelf.service.api'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.impl))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.impl</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version=1.5</require>
+  </resource>
+  <resource id='com.test.felix.bookshelf-service-tui/1.8.0' symbolicname='com.test.felix.bookshelf-service-tui' presentationname='Bookshelf Service TUI' uri='file:/Users/amin/Work/sometotest/test-felix/releases/com/test/felix/com.test.felix.bookshelf-service-tui/1.8.0/com.test.felix.bookshelf-service-tui-1.8.0.jar' version='1.8.0'>
+    <size>7067</size>
+    <category id='sample'/>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.test.felix.bookshelf-service-tui'/>
+      <p n='presentationname' v='Bookshelf Service TUI'/>
+      <p n='version' t='version' v='1.8.0'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.service.tui'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.osgi.framework,com.test.felix.bookshelf.inventory.api,org.apache.felix.service.command,com.test.felix.bookshelf.service.api'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.tui))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.tui</require>
+    <require name='package' filter='(&amp;(package=org.apache.felix.service.command)(version&gt;=0.6.0))' extend='false' multiple='false' optional='false'>Import package org.apache.felix.service.command;version=0.6</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version=1.5</require>
+  </resource>
+  <resource id='com.test.felix.bookshelf-service-tui/1.8.1' symbolicname='com.test.felix.bookshelf-service-tui' presentationname='Bookshelf Service TUI' uri='file:/Users/amin/Work/sometotest/test-felix/releases/com/test/felix/com.test.felix.bookshelf-service-tui/1.8.1/com.test.felix.bookshelf-service-tui-1.8.1.jar' version='1.8.1'>
+    <size>7302</size>
+    <category id='sample'/>
+    <capability name='bundle'>
+      <p n='symbolicname' v='com.test.felix.bookshelf-service-tui'/>
+      <p n='presentationname' v='Bookshelf Service TUI'/>
+      <p n='version' t='version' v='1.8.1'/>
+      <p n='manifestversion' v='2'/>
+    </capability>
+    <capability name='package'>
+      <p n='package' v='com.test.felix.bookshelf.service.tui'/>
+      <p n='version' t='version' v='0.0.0'/>
+      <p n='uses:' v='org.osgi.framework,com.test.felix.bookshelf.inventory.api,org.apache.felix.service.command,com.test.felix.bookshelf.service.api'/>
+    </capability>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.inventory.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.inventory.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.api))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.api</require>
+    <require name='package' filter='(&amp;(package=com.test.felix.bookshelf.service.tui))' extend='false' multiple='false' optional='false'>Import package com.test.felix.bookshelf.service.tui</require>
+    <require name='package' filter='(&amp;(package=org.apache.felix.service.command)(version&gt;=0.6.0))' extend='false' multiple='false' optional='false'>Import package org.apache.felix.service.command;version=0.6</require>
+    <require name='package' filter='(&amp;(package=org.osgi.framework)(version&gt;=1.5.0))' extend='false' multiple='false' optional='false'>Import package org.osgi.framework;version=1.5</require>
+  </resource>
+</repository>
