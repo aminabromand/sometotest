@@ -7,7 +7,7 @@
     <groupId>com.test.felix</groupId>
     <artifactId>bookshelf-inventory-impl-mock</artifactId>
 
-    <version>1.9.0</version>
+    <version>1.5.0</version>
     <packaging>bundle</packaging>
     <name>Bookshelf Inventory Impl - Mock</name>
     <description>Memory-based mock implementation of the Bookshelf Inventory API</description>
@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.test.felix</groupId>
-            <artifactId>com.test.felix.bookshelf-inventory-api</artifactId>
+            <artifactId>bookshelf-inventory-api</artifactId>
             <version>1.5.0</version>
         </dependency>
         <dependency>
@@ -69,14 +69,14 @@
                 <artifactId>maven-ipojo-plugin</artifactId>
                 <version>1.6.0</version>
                 <executions>
-                <execution>
-                <goals>
-                    <goal>ipojo-bundle</goal>
-                </goals>
-                    <configuration>
-                        <metadata>src/main/ipojo/meta.xml</metadata>
-                    </configuration>
-                </execution>
+                    <execution>
+                        <goals>
+                            <goal>ipojo-bundle</goal>
+                        </goals>
+                        <configuration>
+                            <metadata>src/main/ipojo/meta.xml</metadata>
+                        </configuration>
+                    </execution>
                 </executions>
             </plugin>
 

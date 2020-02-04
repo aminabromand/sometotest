@@ -7,11 +7,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.test.felix</groupId>
-    	<artifactId>com.test.felix.bookshelf-inventory-api</artifactId>
-    	<version>1.5.0</version>
-    	<packaging>bundle</packaging>
-   		<name>Bookshelf Inventory API</name>
-    	<description>Defines the API for the Bookshelf inventory.</description>
+	<artifactId>com.test.felix.bookshelf-inventory-api</artifactId>
+	<version>1.5.0</version>
+	<packaging>bundle</packaging>
+	<name>Bookshelf Inventory API</name>
+	<description>Defines the API for the Bookshelf inventory.</description>
 
 	<dependencies>
 	</dependencies>

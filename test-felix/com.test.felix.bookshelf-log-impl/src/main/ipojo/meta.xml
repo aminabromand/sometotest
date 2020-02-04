@@ -3,15 +3,16 @@
         xsi:schemaLocation="org.apache.felix.ipojo http://felix.apache.org/ipojo/schemas/CURRENT/core.xsd"
         xmlns="org.apache.felix.ipojo">
 
-    <component classname="com.test.felix.bookshelf.inventory.impl.mock.BookInventoryMockImpl"
-               name="BookInventoryMockImpl">
+    <component classname="com.test.felix.bookshelf.log.impl.BookshelfLogHelperImpl"
+               name="BookshelfLogHelperImpl">
 
         <provides />
+        <requires field="log" />
 
     </component>
 
-    <instance component="BookInventoryMockImpl"
-        name="bookshelf.inventory.impl.mock">
+    <instance component="BookshelfLogHelperImpl"
+        name="bookshelf.log-helper.impl">
 
     </instance>
 

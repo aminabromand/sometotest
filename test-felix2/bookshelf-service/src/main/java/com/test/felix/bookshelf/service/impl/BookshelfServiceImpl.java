@@ -1,10 +1,9 @@
 package com.test.felix.bookshelf.service.impl;
 
-import com.test.felix.bookshelf.service.api.BookInventoryNotRegisteredRuntimeException;
-import com.test.felix.bookshelf.service.api.BookshelfService;
+import com.test.felix.bookshelf.log.api.BookshelfLogHelper;
+import com.test.felix.bookshelf.log.api.LoggerConstants;
+import com.test.felix.bookshelf.service.api.*;
 import com.test.felix.bookshelf.inventory.api.*;
-import com.test.felix.bookshelf.service.api.InvalidCredentialsException;
-import com.test.felix.bookshelf.service.api.SessionNotValidRuntimeException;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
@@ -20,12 +19,14 @@ public class BookshelfServiceImpl implements BookshelfService{
 
 	BookInventory inventory;
 
-	public BookshelfServiceImpl(BundleContext context) {
-		this.context = context;
-	}
+	BookshelfLogHelper logger;
 
-	public BookshelfServiceImpl() {
-	}
+	//public BookshelfServiceImpl(BundleContext context) {
+	//	this.context = context;
+	//}
+
+	//public BookshelfServiceImpl() {
+	//}
 
 	@Override public Set<String> getGroups( String sessionId ){
 		return null;
@@ -34,7 +35,7 @@ public class BookshelfServiceImpl implements BookshelfService{
 	@Override public void addBook( String session, String isbn, String title, String author, String category, int rating )
 					throws BookAlreadyExistsException, InvalidBookException{
 
-		//getLogger().debug(LoggerConstants.LOG_ADD_BOOK, isbn, title, author, category, rating);
+		//getLogger().debug( LoggerConstants.LOG_ADD_BOOK, isbn, title, author, category, rating);
 
 		checkSession(sessionId);
 		BookInventory inventory = lookupBookInventory();
@@ -73,15 +74,15 @@ public class BookshelfServiceImpl implements BookshelfService{
 
 	private BookInventory lookupBookInventory() {
 
-		String name = BookInventory.class.getName();
+		return this.inventory;
+
+		/*String name = BookInventory.class.getName();
 		ServiceReference ref = this.context.getServiceReference(name);
 		if (ref == null)
 		{
 			throw new BookInventoryNotRegisteredRuntimeException(name);
 		}
-		return (BookInventory) this.context.getService(ref);
-
-		//return this.inventory;
+		return (BookInventory) this.context.getService(ref);*/
 
 	}
 
@@ -90,6 +91,8 @@ public class BookshelfServiceImpl implements BookshelfService{
 	}
 
 	@Override public Set<String> searchBooksByAuthor( String session, String authorLike ){
+
+		//getLogger().debug(LoggerConstants.LOG_SEARCH_BOOK, authorLike);
 
 		checkSession(sessionId);
 		BookInventory inventory = lookupBookInventory();
@@ -134,8 +137,8 @@ public class BookshelfServiceImpl implements BookshelfService{
 		return this.sessionId!=null && this.sessionId.equals(sessionId);
 	}
 
-	//private BookshelfLogHelper getLogger()
-	//{
-//		return this.logger;
-//	}
+	private BookshelfLogHelper getLogger()
+	{
+		return this.logger;
+	}
 }

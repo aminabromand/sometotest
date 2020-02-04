@@ -15,7 +15,7 @@
     <dependencies>
         <dependency>
             <groupId>com.test.felix</groupId>
-            <artifactId>com.test.felix.bookshelf-inventory-api</artifactId>
+            <artifactId>bookshelf-inventory-api</artifactId>
             <version>1.5.0</version>
         </dependency>
         <dependency>
@@ -38,9 +38,9 @@
                         <Bundle-Category>sample</Bundle-Category>
                         <Bundle-SymbolicName>${artifactId}</Bundle-SymbolicName>
 
-                        <Bundle-Activator>
+                        <!--<Bundle-Activator>
                             com.test.felix.bookshelf.inventory.impl.mock.activator.BookInventoryMockImplActivator
-                        </Bundle-Activator>
+                        </Bundle-Activator>-->
                         <Private-Package>
                             com.test.felix.bookshelf.inventory.impl.mock.activator
                         </Private-Package>
@@ -63,6 +63,24 @@
                     <target>6</target>
                 </configuration>
             </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-ipojo-plugin</artifactId>
+                <version>1.6.0</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>ipojo-bundle</goal>
+                        </goals>
+                        <configuration>
+                            <metadata>src/main/ipojo/meta.xml</metadata>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+
         </plugins>
     </build>
 

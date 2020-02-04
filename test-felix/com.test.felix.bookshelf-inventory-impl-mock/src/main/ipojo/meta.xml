@@ -1,20 +1,17 @@
 <ipojo
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="org.apache.felix.ipojo http://felix.apache.org/ipojo/schemas/CURRENT/core.xsd"
-    xmlns="org.apache.felix.ipojo">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="org.apache.felix.ipojo http://felix.apache.org/ipojo/schemas/CURRENT/core.xsd"
+        xmlns="org.apache.felix.ipojo">
 
-    <component classname="com.test.felix.bookshelf.service.impl.BookshelfServiceImpl"
-               name="BookshelfServiceImpl">
+    <component classname="com.test.felix.bookshelf.inventory.impl.mock.BookInventoryMockImpl"
+               name="BookInventoryMockImpl">
 
-        <provides></provides>
-
-        <requires field="inventory"></requires>
-        <requires field="log"></requires>
+        <provides />
 
     </component>
 
-    <instance component="BookshelfServiceImpl"
-        name="bookshelf.service.impl">
+    <instance component="BookInventoryMockImpl"
+        name="bookshelf.inventory.impl.mock">
 
     </instance>
 

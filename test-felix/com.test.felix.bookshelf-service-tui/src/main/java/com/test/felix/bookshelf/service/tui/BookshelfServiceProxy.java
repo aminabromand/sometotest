@@ -6,6 +6,10 @@ import com.test.felix.bookshelf.inventory.api.BookNotFoundException;
 import com.test.felix.bookshelf.inventory.api.InvalidBookException;
 import com.test.felix.bookshelf.service.api.BookshelfService;
 import com.test.felix.bookshelf.service.api.InvalidCredentialsException;
+import org.apache.felix.ipojo.annotations.Component;
+import org.apache.felix.ipojo.annotations.Provides;
+import org.apache.felix.ipojo.annotations.Requires;
+import org.apache.felix.ipojo.annotations.ServiceProperty;
 import org.apache.felix.service.command.Descriptor;
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
@@ -13,24 +17,40 @@ import org.osgi.framework.ServiceReference;
 import java.util.HashSet;
 import java.util.Set;
 
-public class BookshelfServiceProxy{
+@Component(name="BookshelfServiceProxy")
+@Provides
+public class BookshelfServiceProxy {
 
 	public static final String SCOPE = "book";
 	public static final String[] FUNCTIONS = new String[] {
 					"add", "search"
 	};
-	private BundleContext context;
-	public BookshelfServiceProxy( BundleContext context)
-	{
-		this.context = context;
-	}
+
+	private static final String FUNCTIONS_STR = "[search]";
+
+	@Requires
+	private BookshelfService bookshelf;
+
+	@ServiceProperty(name = "osgi.command.scope", value=SCOPE)
+	String gogoScope;
+
+	@ServiceProperty(name = "osgi.command.function", value=FUNCTIONS_STR)
+	String gogoFunctions;
+
+	public BookshelfServiceProxy() { }
+
+	//private BundleContext context;
+	//public BookshelfServiceProxy( BundleContext context)
+	//{
+	//	this.context = context;
+	//}
+
+
 
 	@Descriptor("Search books by author, title, or category")
-	public Set<Book> search(
-			@Descriptor("username") String username,
-			@Descriptor("password") String password,
-			@Descriptor("search on attribute: author, title, or category") String attribute,
-			@Descriptor("match like (use % at the beginning or end of <like> for wild-card)") String filter)
+	public Set<Book> search( @Descriptor("username") String username, @Descriptor("password") String password,
+					@Descriptor("search on attribute: author, title, or category") String attribute,
+					@Descriptor("match like (use % at the beginning or end of <like> for wild-card)") String filter )
 					throws InvalidCredentialsException {
 
 		BookshelfService service = lookupService();
@@ -54,7 +74,9 @@ public class BookshelfServiceProxy{
 
 	protected BookshelfService lookupService() {
 
-		ServiceReference reference = context.getServiceReference( BookshelfService.class.getName());
+		return this.bookshelf;
+
+		/*ServiceReference reference = context.getServiceReference( BookshelfService.class.getName());
 		if (reference == null) {
 			throw new RuntimeException(
 							"BookshelfService not registered, cannot invoke "+
@@ -67,7 +89,7 @@ public class BookshelfServiceProxy{
 							"BookshelfService not registered, cannot invoke "+
 											"operation");
 		}
-		return service;
+		return service;*/
 	}
 
 	private Set<Book> getBooks(
@@ -91,12 +113,9 @@ public class BookshelfServiceProxy{
 	}
 
 	@Descriptor("Search books by rating")
-	public Set<Book> search(
-					@Descriptor("username") String username,
-					@Descriptor("password") String password,
-					@Descriptor("search on attribute: rating") String attribute,
-					@Descriptor("lower rating limit (inclusive)") int lower,
-					@Descriptor("upper rating limit (inclusive)") int upper)
+	public Set<Book> search( @Descriptor("username") String username, @Descriptor("password") String password,
+					@Descriptor("search on attribute: rating") String attribute, @Descriptor("lower rating limit (inclusive)") int lower,
+					@Descriptor("upper rating limit (inclusive)") int upper )
 					throws InvalidCredentialsException{
 
 		if( !"rating".equals( attribute ) ){
@@ -111,13 +130,9 @@ public class BookshelfServiceProxy{
 		return getBooks( sessionId, service, results );
 	}
 
-	public String add(@Descriptor("username") String username,
-					@Descriptor("password") String password,
-					@Descriptor("ISBN") String isbn,
-					@Descriptor("Title") String title,
-					@Descriptor("Author") String author,
-					@Descriptor("Category") String category,
-					@Descriptor("Rating (0..10)") int rating)
+	public String add( @Descriptor("username") String username, @Descriptor("password") String password,
+					@Descriptor("ISBN") String isbn, @Descriptor("Title") String title, @Descriptor("Author") String author,
+					@Descriptor("Category") String category, @Descriptor("Rating (0..10)") int rating )
 					throws InvalidCredentialsException, BookAlreadyExistsException, InvalidBookException
 	{
 		BookshelfService service = lookupService();

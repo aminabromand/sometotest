@@ -11,7 +11,7 @@
     </component>
 
     <instance component="BookInventoryMockImpl"
-        name="bookshelf.inventory.impl.mock">
+        name="com.test.felix.bookshelf.inventory.impl.mock">
 
     </instance>
 

@@ -16,7 +16,7 @@ public class BookshelfTuiActivator implements BundleActivator
 
 		bc.registerService(
 						BookshelfServiceProxy.class.getName(),
-						new BookshelfServiceProxy(bc), props);
+						new BookshelfServiceProxy(), props);
 	}
 	public void stop(BundleContext bc)
 	{

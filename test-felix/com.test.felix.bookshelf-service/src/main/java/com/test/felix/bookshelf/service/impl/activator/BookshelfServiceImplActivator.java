@@ -18,9 +18,9 @@ public class BookshelfServiceImplActivator implements BundleActivator{
 	ServiceRegistration reg = null;
 
 	@Override public void start( BundleContext bundleContext ) throws Exception{
-		this.reg = bundleContext.registerService(
-						BookshelfService.class.getName(),
-						new BookshelfServiceImpl(bundleContext), null);
+		//this.reg = bundleContext.registerService(
+		//				BookshelfService.class.getName(),
+		//				new BookshelfServiceImpl(bundleContext), null);
 		//testService(bundleContext);
 	}
 

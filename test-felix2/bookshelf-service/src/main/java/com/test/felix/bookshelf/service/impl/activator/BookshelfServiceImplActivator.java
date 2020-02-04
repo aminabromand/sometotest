@@ -20,7 +20,8 @@ public class BookshelfServiceImplActivator implements BundleActivator{
 	@Override public void start( BundleContext bundleContext ) throws Exception{
 		this.reg = bundleContext.registerService(
 						BookshelfService.class.getName(),
-						new BookshelfServiceImpl(bundleContext), null);
+						new BookshelfServiceImpl(), null);
+						//new BookshelfServiceImpl(bundleContext), null);
 		//testService(bundleContext);
 	}
 
