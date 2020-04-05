@@ -1,0 +1,51 @@
+# update obr repos
+echo Adding releases obr repository. . .
+repos add file:///Users/amin/Work/sometotest/test-felix/releases/repository.xml
+install file:///Users/amin/Work/sometotest/test-felix/additionalJars/org.apache.felix.ipojo-1.6.4.jar
+install file:///Users/amin/Work/sometotest/test-felix/additionalJars/org.apache.felix.log-1.0.0.jar
+start 7
+start 8
+
+# deploy tier 3
+echo Deploying tier 3 \(inventory\) bundles. . .
+bundlelevel -i 2
+frameworklevel 2
+#deploy -s "Bookshelf Inventory API"
+#deploy -s "Bookshelf Inventory Impl - Mock"
+
+#install file:///Users/amin/Work/sometotest/test-felix/test/bookshelf-inventory-api-1.5.0.jar
+
+
+install file:///Users/amin/Work/sometotest/test-felix/test/bookshelf-inventory-impl-mock-1.5.0.jar
+start 9
+
+install file:///Users/amin/Work/sometotest/test-felix/test/bookshelf-log-api-1.10.0.jar
+start 10
+
+install file:///Users/amin/Work/sometotest/test-felix/test/bookshelf-log-impl-1.10.0.jar
+start 11
+
+# deploy tier 2
+echo Deploying tier 2 \(business logic\) bundles. . .
+bundlelevel -i 3
+frameworklevel 3
+#deploy -s "Bookshelf Service"
+
+install file:///Users/amin/Work/sometotest/test-felix/test/bookshelf-service-1.9.0.jar
+start 12
+
+# deploy tier 1
+echo Deploying tier 1 \(presentation\) bundles. . .
+bundlelevel -i 5
+frameworklevel 5
+#deploy -s "Bookshelf Service TUI"
+
+# populate books
+#source populate-books.tsl
+
+# deploy -s "Apache Felix Http Jetty"
+# deploy -s "Apache Felix Http Whiteboard"
+
+
+
+
